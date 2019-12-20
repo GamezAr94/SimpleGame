@@ -1,11 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Collider : MonoBehaviour {
+public class PlayerCollider : MonoBehaviour
+{
 
-	void OnCollisionEnter()
+    public PlayerMovement script;
+    public Score score;
+    public bool alive = false;
+
+
+    void OnCollisionEnter(Collision collisionInfo)
     {
-        Debug.Log("Hit Something.");
+        if (collisionInfo.collider.tag == "Obstacle")
+        {
+            script.enabled = false;
+            score.setStillPlaying(ref alive);
+        }
+    }
+    void OnCollisionExit(Collision collisionInfo)
+    {
+        if (collisionInfo.collider.tag == "Environment")
+        {
+            score.setStillPlaying(ref alive);
+        }
     }
 }
